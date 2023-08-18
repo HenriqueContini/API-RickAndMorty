@@ -7,7 +7,13 @@ import errorResponse from "../infra/errorResponse";
 export default class CharacterController {
   static async getAll(req: Request, res: Response<ApiResponse<Character[]>>) {
     try {
-      const data = await CharacterService.getAll();
+      let page: number | null = null;
+
+      if (!isNaN(Number(req.query.page))) {
+        page = Number(req.query.page);
+      }
+
+      const data = await CharacterService.getAll(page);
 
       return res.status(200).json({
         error: false,
@@ -15,6 +21,7 @@ export default class CharacterController {
         data: data.characters,
       });
     } catch (error: unknown) {
+      console.log(error);
       errorResponse(res, 500, "Ocorreu um erro interno", error);
     }
   }

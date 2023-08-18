@@ -1,17 +1,27 @@
+import getNextPage from "../common/getNextPage";
+import getPrevPage from "../common/getPrevPage";
 import httpClient from "../infra/httpClient";
 import Character, { Gender } from "../types/character";
 import InfoResponse from "../types/infoResponse";
 
 export default class CharacterService {
-  static async getAll(): Promise<{
+  static async getAll(page: number | null = null): Promise<{
     info: InfoResponse;
     characters: Character[];
   }> {
     try {
-      const response = await httpClient.get("/character");
+      const URL = page ? `/character/?page=${page}` : `/character`;
 
-      const info: InfoResponse = response.data.info;
+      const response = await httpClient.get(URL);
+
+      const rawInfo: InfoResponse = response.data.info;
       const rawCharacters: Character[] = response.data.results;
+
+      const info: InfoResponse = {
+        ...rawInfo,
+        next: getNextPage("/character", page, rawInfo.next),
+        prev: getPrevPage("/character", page, rawInfo.prev),
+      };
 
       const characters: Character[] = rawCharacters.map(
         (character: Character): Character => {
@@ -26,7 +36,7 @@ export default class CharacterService {
       );
 
       return {
-        info,
+        info: info,
         characters,
       };
     } catch (error) {
