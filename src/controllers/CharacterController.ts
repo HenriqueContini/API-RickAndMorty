@@ -7,13 +7,23 @@ import errorResponse from "../infra/errorResponse";
 export default class CharacterController {
   static async getAll(req: Request, res: Response<ApiResponse<Character[]>>) {
     try {
-      let page: number | null = null;
+      let pageParam = req.query.page;
 
-      if (!isNaN(Number(req.query.page))) {
-        page = Number(req.query.page);
+      if (pageParam === undefined) {
+        const data = await CharacterService.getAll();
+
+        return res.status(200).json({
+          error: false,
+          info: data.info,
+          data: data.characters,
+        });
       }
 
-      const data = await CharacterService.getAll(page);
+      if (isNaN(Number(pageParam))) {
+        throw new Error("Page precisa ser um número!");
+      }
+
+      const data = await CharacterService.getAll(Number(pageParam));
 
       return res.status(200).json({
         error: false,
