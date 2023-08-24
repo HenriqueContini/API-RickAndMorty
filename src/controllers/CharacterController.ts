@@ -44,7 +44,7 @@ export default class CharacterController {
       let id = req.params.id;
 
       if (isNaN(Number(id))) {
-        throw new Error("ID precisa ser um número!");
+        return errorResponse(res, 400, "ID precisa ser um número");
       }
 
       const data = await CharacterService.getById(Number(id));
