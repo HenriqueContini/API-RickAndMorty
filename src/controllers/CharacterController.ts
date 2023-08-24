@@ -20,7 +20,7 @@ export default class CharacterController {
       }
 
       if (isNaN(Number(pageParam))) {
-        throw new Error("Page precisa ser um número!");
+        return errorResponse(res, 400, "Page precisa ser um número");
       }
 
       const data = await CharacterService.getAll(Number(pageParam));
