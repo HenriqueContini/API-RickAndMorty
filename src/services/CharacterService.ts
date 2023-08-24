@@ -52,7 +52,15 @@ export default class CharacterService {
       const response = await httpClient.get(URL);
 
       if (response.data) {
-        return { ...response.data };
+        const character: Character = response.data;
+
+        return {
+          id: character.id,
+          name: character.name,
+          species: character.species,
+          gender: character.gender,
+          url: character.url,
+        };
       }
 
       return null;
