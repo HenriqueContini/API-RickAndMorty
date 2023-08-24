@@ -1,3 +1,4 @@
+import { isAxiosError } from "axios";
 import getNextPage from "../common/getNextPage";
 import getPrevPage from "../common/getPrevPage";
 import httpClient from "../infra/httpClient";
@@ -40,8 +41,27 @@ export default class CharacterService {
         characters,
       };
     } catch (error) {
-      console.log(error);
       throw new Error("Ocorreu um erro ao tentar pegar os dados!");
+    }
+  }
+
+  static async getById(id: number): Promise<Character | null> {
+    try {
+      const URL = `/character/${id}`;
+
+      const response = await httpClient.get(URL);
+
+      if (response.data) {
+        return { ...response.data };
+      }
+
+      return null;
+    } catch (error) {
+      if (isAxiosError(error) && error.response?.status) {
+        return null;
+      }
+
+      throw new Error(`Erro ao tentar encontrar personagem com ID: ${id}`);
     }
   }
 }

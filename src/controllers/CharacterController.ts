@@ -35,4 +35,31 @@ export default class CharacterController {
       errorResponse(res, 500, "Ocorreu um erro interno", error);
     }
   }
+
+  static async getById(
+    req: Request,
+    res: Response<ApiResponse<Character | null>>
+  ) {
+    try {
+      let id = req.params.id;
+
+      if (isNaN(Number(id))) {
+        throw new Error("ID precisa ser um número!");
+      }
+
+      const data = await CharacterService.getById(Number(id));
+
+      if (data) {
+        return res.status(200).json({
+          error: false,
+          data,
+        });
+      }
+
+      return errorResponse(res, 404, "Personagem não encontrado");
+    } catch (error: unknown) {
+      console.log(error);
+      errorResponse(res, 500, "Ocorreu um erro interno", error);
+    }
+  }
 }
