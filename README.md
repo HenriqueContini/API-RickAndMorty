@@ -6,7 +6,7 @@ API criada para os estudos de back-end, utilizando Node, Express, Axios e Jest, 
 
 Nesta API, é possível buscar por todos os personagens ou por IDs específicos. Foi utilizado boas práticas de tratamento de erros, como mensagens padronizadas e status HTTP semânticos.
 
-## ⚙️ Tecnologias
+### ⚙️ Tecnologias
 
 - Node.js
 - TypeScript
@@ -14,6 +14,63 @@ Nesta API, é possível buscar por todos os personagens ou por IDs específicos.
 - Axios
 - Jest
 - Supertest
+
+## 🏴󠁶󠁵󠁭󠁡󠁰󠁿 Endpoints
+
+### Lista de personagens
+
+#### Request
+`GET /character/`
+#### Response
+```
+{
+  "error": false,
+  "info": {
+    "count": 826,
+    "pages": 42,
+    "next": "http://localhost:3000/character?page=2",
+    "prev": null
+  },
+  "data": [...]
+}
+```
+### Lista de personagens com paginação
+
+#### Request
+`GET /character?page=3/`
+#### Response
+```
+{
+  "error": false,
+  "info": {
+    "count": 826,
+    "pages": 42,
+    "next": "http://localhost:3000/character?page=4",
+    "prev": "http://localhost:3000/character?page=2"
+  },
+  "data": [...]
+}
+
+```
+
+### Personagem por ID
+
+#### Request
+`GET /character/1/`
+#### Response
+```
+{
+  "error": false,
+  "data": {
+    "id": 1,
+    "name": "Rick Sanchez",
+    "species": "Human",
+    "gender": "Male",
+    "url": "https://rickandmortyapi.com/api/character/1"
+  }
+}
+
+```
 
 ## 🏃‍♂️ Rodar projeto
 
@@ -35,7 +92,7 @@ npm install
 npm run dev
 ```
 
-Caso, você deseje ver os resultados dos testes, basta rodar:
+4. Testes:
 
 ```
 npm run test
