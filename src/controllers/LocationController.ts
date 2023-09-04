@@ -35,4 +35,31 @@ export default class LocationController {
       errorResponse(res, 500, "Ocorreu um erro interno", error);
     }
   }
+
+  static async getById(
+    req: Request,
+    res: Response<ApiResponse<Location | null>>
+  ) {
+    try {
+      let id = req.params.id;
+
+      if (isNaN(Number(id))) {
+        return errorResponse(res, 400, "ID precisa ser um número");
+      }
+
+      const data = await LocationService.getById(Number(id));
+
+      if (data) {
+        return res.status(200).json({
+          error: false,
+          data,
+        });
+      }
+
+      return errorResponse(res, 404, "Localização não encontrada");
+    } catch (error: unknown) {
+      console.log(error);
+      errorResponse(res, 500, "Ocorreu um erro interno", error);
+    }
+  }
 }
