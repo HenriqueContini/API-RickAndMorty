@@ -1,3 +1,4 @@
+import getNewUrlById from "../common/getNewUrlById";
 import getNextPage from "../common/getNextPage";
 import getPrevPage from "../common/getPrevPage";
 import httpClient from "../infra/httpClient";
@@ -30,7 +31,7 @@ export default class LocationService {
             name: location.name,
             type: location.type,
             dimension: location.dimension,
-            url: location.url,
+            url: getNewUrlById("/location", location.id),
           };
         }
       );

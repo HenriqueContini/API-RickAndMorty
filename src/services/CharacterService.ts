@@ -4,6 +4,7 @@ import getPrevPage from "../common/getPrevPage";
 import httpClient from "../infra/httpClient";
 import Character from "../types/character";
 import InfoResponse from "../types/infoResponse";
+import getNewUrlById from "../common/getNewUrlById";
 
 export default class CharacterService {
   static async getAll(page: number | null = null): Promise<{
@@ -31,7 +32,7 @@ export default class CharacterService {
             name: character.name,
             species: character.species,
             gender: character.gender,
-            url: character.url,
+            url: getNewUrlById("/character", character.id),
           };
         }
       );
@@ -59,7 +60,7 @@ export default class CharacterService {
           name: character.name,
           species: character.species,
           gender: character.gender,
-          url: character.url,
+          url: getNewUrlById("/character", character.id),
         };
       }
 
