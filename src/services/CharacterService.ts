@@ -2,7 +2,7 @@ import { isAxiosError } from "axios";
 import getNextPage from "../common/getNextPage";
 import getPrevPage from "../common/getPrevPage";
 import httpClient from "../infra/httpClient";
-import Character, { Gender } from "../types/character";
+import Character from "../types/character";
 import InfoResponse from "../types/infoResponse";
 
 export default class CharacterService {
