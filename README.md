@@ -4,7 +4,7 @@
 
 API criada para os estudos de back-end, utilizando Node, Express, Axios e Jest, usando como base a <a href="https://rickandmortyapi.com/documentation/">Ricky and Morty API</a>.
 
-Nesta API, é possível buscar por todos os personagens ou por IDs específicos. Foi utilizado boas práticas de tratamento de erros, como mensagens padronizadas e status HTTP semânticos.
+Nesta API, é possível buscar por todos os personagens ou lugares de Ricky and Morty. Foi utilizado boas práticas de tratamento de erros, como mensagens padronizadas e status HTTP semânticos.
 
 ### ⚙️ Tecnologias
 
@@ -66,11 +66,67 @@ Nesta API, é possível buscar por todos os personagens ou por IDs específicos.
     "name": "Rick Sanchez",
     "species": "Human",
     "gender": "Male",
-    "url": "https://rickandmortyapi.com/api/character/1"
+    "url": "http://localhost:3000/character/1"
   }
 }
 
 ```
+
+### Lista de lugares
+
+#### Request
+`GET /location/`
+#### Response
+```
+{
+  "error": false,
+  "info": {
+    "count": 126,
+    "pages": 7,
+    "next": "http://localhost:3000/location?page=2",
+    "prev": null
+  },
+  "data": [...]
+}
+```
+### Lista de lugares com paginação
+
+#### Request
+`GET /location?page=3/`
+#### Response
+```
+{
+  "error": false,
+  "info": {
+    "count": 126,
+    "pages": 7,
+    "next": "http://localhost:3000/location?page=4",
+    "prev": "http://localhost:3000/location?page=2"
+  },
+  "data": [...]
+}
+
+```
+
+### Lugares por ID
+
+#### Request
+`GET /location/1/`
+#### Response
+```
+{
+	"error": false,
+	"data": {
+		"id": 1,
+		"name": "Earth (C-137)",
+		"type": "Planet",
+		"dimension": "Dimension C-137",
+		"url": "http://localhost:3000/location/1"
+	}
+}
+
+```
+
 
 ## 🏃‍♂️ Rodar projeto
 
